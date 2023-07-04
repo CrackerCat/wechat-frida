@@ -36,7 +36,7 @@ def is_login():
     是否登录
     :return:
     """
-    return {"msg": "", "data": {"code": wechatf.is_login()}}
+    return {"msg": "", "code": 0, "data": {"is_login": wechatf.is_login()}}
 
 
 @app.get("/get_login_qrcode")
