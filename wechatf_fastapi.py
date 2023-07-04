@@ -95,24 +95,24 @@ def get_msg():
     return {"msg": "", "code": 0, "data": wechatf.get_message(False)}
 
 
-@app.get("/send_message/{wxid}/{content}")
+@app.get("/send_message/{wxid}/{message}")
 @check_is_login
-def send_message(wxid: str, content: str):
+def send_message(wxid: str, message: str):
     """
     发送消息
     :param wxid:
-    :param content:
+    :param message:
     :return:
     """
     # 延迟3-5秒
     time.sleep(random.randint(2, 6))
-    wechatf.send_message(wxid, content)
-    return {"msg": "OK", "code": 0}
+    wechatf.send_message(wxid, message)
+    return {"msg": "", "code": 0}
 
 
 if __name__ == '__main__':
     uvicorn.run('wechatf_fastapi:app',
-                host='127.0.0.1', port=8000,
+                host='127.0.0.1', port=8001,
                 reload=True, workers=1)
 
 # uvicorn wechatf_fastapi_demo:app --reload

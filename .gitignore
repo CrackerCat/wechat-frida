@@ -1,3 +1,4 @@
+doc/build
 *.key
 .idea/
 # Byte-compiled / optimized / DLL files
