@@ -12,5 +12,5 @@ sphinx-quickstart
 ## 3、更改conf.py
 ```python
 html_theme = "sphinx_rtd_theme"
-extensions = ['recommonmark']
+extensions = ['recommonmark', "sphinx_markdown_tables"]
 ```

@@ -9,6 +9,8 @@ import functools
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
+from typing import Optional
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -95,18 +97,23 @@ def get_msg():
     return {"msg": "", "code": 0, "data": wechatf.get_message(False)}
 
 
-@app.get("/send_message/{wxid}/{message}")
+class WXTextMessage(BaseModel):
+    wxid: str  # wxid
+    message: str  # 消息
+    # address: Optional[str] = None       # 住址 可选字段
+
+
+@app.post("/send_message")
 @check_is_login
-def send_message(wxid: str, message: str):
+def send_message(wxtextmessage: WXTextMessage):
     """
     发送消息
-    :param wxid:
-    :param message:
+    :param wxtextmessage:
     :return:
     """
     # 延迟3-5秒
     time.sleep(random.randint(2, 6))
-    wechatf.send_message(wxid, message)
+    wechatf.send_message(wxtextmessage.wxid, wxtextmessage.message)
     return {"msg": "", "code": 0}
 
 
