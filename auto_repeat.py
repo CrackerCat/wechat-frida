@@ -208,8 +208,6 @@ def main():
     # 判断是否登录
     if not wechatf.is_login():
         print("未登录,正在获取登录二维码")
-        # 刷新二维码
-        wechatf.goto_login_qrcode()
 
         # 获取二维码
         png_bytes = bytes.fromhex(wechatf.get_login_qrcode())
