@@ -48,9 +48,11 @@ wechatf-http
 ### 3.3、自动回复消息、GPT聊天
 
 1. 免费获取ChatGPT访问key，获取地址 ：[https://github.com/chatanywhere/GPT_API_free](https://github.com/chatanywhere/GPT_API_free)
-，跳转到链接后，点击```免费获取```链接，使用github账号授权获取key。
+，跳转到链接后，点击```领取免费Key```链接，使用github账号授权获取key。
 
-2. 运行并填入key（首次需要填入）
+2. 运行
+
+> 首次会提示输入ChatGPT访问key
 
 ```bash
 wechatf-chat
