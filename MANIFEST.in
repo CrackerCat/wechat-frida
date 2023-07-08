@@ -1,1 +1,2 @@
 recursive-include wechatf/core/js *
+include requirements.txt
