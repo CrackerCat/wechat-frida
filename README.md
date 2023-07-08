@@ -21,7 +21,7 @@
    （自行搜索下载，或点击这里：[WeChatSetup-3.2.1.154.exe](https://www.dngswin10.com/pcrj/15.html)下载，请注意核对数字签名是否正常）
 2. 安装python3.8及以上版本,下载地址:[https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
-3. 拉取代码并安装依赖。
+3. 拉取代码、安装。
 
 ```bash
 # 代码克隆到本地
@@ -47,17 +47,16 @@ wechatf-http
 
 ### 3.3、自动回复消息、GPT聊天
 
-1. 获取ChatGPT访问key，免费获取地址 ：[https://github.com/chatanywhere/GPT_API_free](https://github.com/chatanywhere/GPT_API_free)
-，跳转到链接后，再点击```免费获取```链接，使用github账号授权获取key。
+1. 免费获取ChatGPT访问key，获取地址 ：[https://github.com/chatanywhere/GPT_API_free](https://github.com/chatanywhere/GPT_API_free)
+，跳转到链接后，点击```免费获取```链接，使用github账号授权获取key。
 
-2. 在项目根目录新建```openai.key```文件，将key保存此文件。
-3. 运行 wechatf_auto_repeat.py。
+2. 运行并填入key（首次需要填入）
 
 ```bash
 wechatf-chat
 ```
 
-4. 用手机微信向文件传输助手发送```/h```命令获取帮助：
+3. 用手机微信向文件传输助手发送```/h```命令获取帮助：
 
  ```bash
 /h
@@ -79,9 +78,9 @@ wechatf-chat
 取消ai聊天。
  ```
 
-5. 用手机微信向文件传输助手发送消息可实现向GPT聊天。
+4. 用手机微信向文件传输助手发送消息可实现向GPT聊天。
 
-###  3.4、python脚本中使用方法
+###  3.4、python脚本中使用
 
 ```python
 # 导入包
