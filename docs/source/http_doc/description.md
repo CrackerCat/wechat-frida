@@ -20,5 +20,5 @@ cd wechat-frida
 python setup.py install
 
 # 启动服务，默认本地8001端口
-wechatf-http-server
+wechatf-http
 ```

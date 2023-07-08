@@ -39,7 +39,7 @@ python setup.py install
 1. 启动服务
 
 ```bash
-wechatf-http-server
+wechatf-http
 ```
 
 2. API默认地址：http://127.0.0.1:8001
@@ -54,7 +54,7 @@ wechatf-http-server
 3. 运行 wechatf_auto_repeat.py。
 
 ```bash
-wechatf-auto-chat
+wechatf-chat
 ```
 
 4. 用手机微信向文件传输助手发送```/h```命令获取帮助：
@@ -82,8 +82,6 @@ wechatf-auto-chat
 5. 用手机微信向文件传输助手发送消息可实现向GPT聊天。
 
 ###  3.4、python脚本中使用方法
-
-在项目根目录新建demo.py
 
 ```python
 # 导入包

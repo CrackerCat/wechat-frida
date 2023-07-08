@@ -28,17 +28,6 @@ class DealMessage:
         # gpt 聊天记录
         self._ai_message_list = []
 
-        # 免费API获取地址
-        # https://github.com/chatanywhere/GPT_API_free
-        # openai.log = "debug"
-
-        # 国内可直接访问
-        openai.api_base = "https://api.chatanywhere.com.cn/v1"
-        # 需要梯子才能访问
-        # openai.api_base = "https://api.chatanywhere.cn/v1/"
-
-        openai.api_key = open("../openai.key", 'r').read()
-
     def _deal_filehelper_msg(self, msg):
         """
         处理文件助手消息
@@ -201,6 +190,28 @@ def handle_message():
 
 
 def main():
+    # 免费API获取地址
+    # https://github.com/chatanywhere/GPT_API_free
+    # openai.log = "debug"
+
+    # 国内可直接访问
+    openai.api_base = "https://api.chatanywhere.com.cn/v1"
+    # 需要梯子才能访问
+    # openai.api_base = "https://api.chatanywhere.cn/v1/"
+
+    # openai key 路径
+    openai_key_path = os.path.join(os.getenv("USERPROFILE"), "wechatf_auto_chat_openai.key")
+    if not os.path.isfile(openai_key_path):
+        print("openai api key免费获取地址：https://github.com/chatanywhere/GPT_API_free")
+
+        # 获取输入的key
+        input_key = input("请设置openai api key:")
+
+        # 写入文件
+        open(openai_key_path, 'w').write(input_key)
+
+    openai.api_key = open(openai_key_path, 'r').read()
+
     # 判断是否登录
     if not core.is_login():
         print("未登录,正在获取登录二维码")
@@ -217,13 +228,17 @@ def main():
         # 打开二维码
         # os.startfile(png_path)
 
-    # 直到登录再继续
-    while True:
-        if not core.is_login():
-            time.sleep(3)
-            print("等待扫描登录...")
-        else:
-            break
+    try:
+        # 直到登录再继续
+        while True:
+            if not core.is_login():
+                time.sleep(3)
+                print("等待扫描登录...")
+            else:
+                break
 
-    print('微信已登录,等待消息...')
-    handle_message()
+        print('微信已登录,等待消息...')
+        handle_message()
+    except KeyboardInterrupt as e:
+        print(e)
+        core.detach()

@@ -23,13 +23,16 @@ class FridaJS:
         # 注册回调js
         recv_js = conf.support_version.get(self._frida_session.get_current_version()).get("frida_recv_js")
 
+        # 回调js script 对象
+        self.recv_js_obj = []
+
         # 为每个回调函数设置消息队列
         for js in recv_js:
             # 为每个js建立消息队列
             self._api_message[js] = queue.Queue()
 
             # 加载脚本
-            self._frida_session.load_script(js, self._api_on_message)
+            self.recv_js_obj.append(self._frida_session.load_script(js, self._api_on_message))
 
     def _gen_on_message_callback(self):
         """
@@ -72,6 +75,18 @@ class FridaJS:
             return self._api_message.get(api_name).get()
         else:
             raise Exception("无API调用消息队列：", api_name)
+
+    def detach(self):
+        """
+        脱离微信
+        :return:
+        """
+        for js in self.recv_js_obj:
+            # 卸载脚本
+            js.unload()
+
+        # 脱离
+        self._frida_session.session.detach()
 
     def __getattr__(self, func_name):
         """

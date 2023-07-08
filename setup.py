@@ -32,8 +32,8 @@ setup(
     # ],
     entry_points={
         'console_scripts': [
-            'wechatf-http-server = wechatf.wechatf_http_server_start:main',
-            'wechatf-auto-chat = wechatf.wechatf_auto_chat:main',
+            'wechatf-http = wechatf.wechatf_http_server_start:main',
+            'wechatf-chat = wechatf.wechatf_auto_chat:main',
         ]
     },
     classifiers=[
