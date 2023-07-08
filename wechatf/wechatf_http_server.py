@@ -1,5 +1,5 @@
 """
-fastapi 使用 wechatf 例子
+fastapi 使用 core 例子
 """
 import io
 import time
@@ -13,7 +13,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-import wechatf
+from . import core
 
 
 def check_is_login(func):
@@ -23,7 +23,7 @@ def check_is_login(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if not wechatf.is_login():
+        if not core.is_login():
             return {"msg": "微信未登录", "code": -1}
         else:
             return func(*args, **kwargs)
@@ -37,7 +37,7 @@ def is_login():
     是否登录
     :return:
     """
-    return {"msg": "", "code": 0, "data": {"is_login": wechatf.is_login()}}
+    return {"msg": "", "code": 0, "data": {"is_login": core.is_login()}}
 
 
 @app.get("/get_login_qrcode")
@@ -46,9 +46,9 @@ def get_login_qrcode():
     获取二维码
     :return:
     """
-    if not wechatf.is_login():
+    if not core.is_login():
         # 获取二维码
-        png_byte = bytes.fromhex(wechatf.get_login_qrcode())
+        png_byte = bytes.fromhex(core.get_login_qrcode())
 
         return StreamingResponse(io.BytesIO(png_byte), media_type="image/png")
     else:
@@ -62,7 +62,7 @@ def get_user_info():
     获取登录用户信息
     :return:
     """
-    return {"msg": "", "code": 0, "data": wechatf.get_user_info()}
+    return {"msg": "", "code": 0, "data": core.get_user_info()}
 
 
 @app.get("/logout")
@@ -72,7 +72,7 @@ def logout():
     退出微信
     :return:
     """
-    wechatf.logout()
+    core.logout()
     return {"msg": "", "code": 0}
 
 
@@ -83,7 +83,7 @@ def get_contacts():
     获取联系人
     :return:
     """
-    return {"msg": "", "code": 0, "data": wechatf.get_contacts()}
+    return {"msg": "", "code": 0, "data": core.get_contacts()}
 
 
 @app.get("/get_message")
@@ -93,7 +93,7 @@ def get_msg():
     获取消息
     :return:
     """
-    return {"msg": "", "code": 0, "data": wechatf.get_message(False)}
+    return {"msg": "", "code": 0, "data": core.get_message(False)}
 
 
 class WXTextMessage(BaseModel):
@@ -112,5 +112,5 @@ def send_message(wxtextmessage: WXTextMessage):
     """
     # 延迟3-5秒
     time.sleep(random.randint(2, 6))
-    wechatf.send_message(wxtextmessage.wxid, wxtextmessage.message)
+    core.send_message(wxtextmessage.wxid, wxtextmessage.message)
     return {"msg": "", "code": 0}

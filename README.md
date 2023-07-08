@@ -30,8 +30,8 @@ git clone https://github.com/luoyeah/wechat-frida
 # 切换到代码目录
 cd wechat-frida
 
-# 安装依赖
-pip install -r requirements.txt
+# 安装
+python setup.py install
 ```
 
 ### 3.2、http协议访问
@@ -39,11 +39,7 @@ pip install -r requirements.txt
 1. 启动服务
 
 ```bash
-# 切换到项目根目录
-cd wechat-frida
-
-# 运行
-python wechatf_http_server_start.py
+wechatf-http-server
 ```
 
 2. API默认地址：http://127.0.0.1:8001
@@ -58,11 +54,7 @@ python wechatf_http_server_start.py
 3. 运行 wechatf_auto_repeat.py。
 
 ```bash
-# 切换到代码目录
-cd wechat-frida
-
-# 运行
-python wechatf_auto_repeat.py
+wechatf-auto-chat
 ```
 
 4. 用手机微信向文件传输助手发送```/h```命令获取帮助：

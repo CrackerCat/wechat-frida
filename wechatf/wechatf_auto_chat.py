@@ -1,5 +1,5 @@
 """
-wechatf 自动回复微信例子
+core 自动回复微信例子
 自动回复
 """
 import os
@@ -9,7 +9,7 @@ import random
 
 import openai
 
-import wechatf
+from . import core
 
 
 # 处理消息
@@ -37,7 +37,7 @@ class DealMessage:
         # 需要梯子才能访问
         # openai.api_base = "https://api.chatanywhere.cn/v1/"
 
-        openai.api_key = open("openai.key", 'r').read()
+        openai.api_key = open("../openai.key", 'r').read()
 
     def _deal_filehelper_msg(self, msg):
         """
@@ -138,7 +138,7 @@ class DealMessage:
         if not wxid.startswith("wxid_") and wxid != 'filehelper':
             return
 
-        remark_name = wechatf.get_remark_or_nick_name(wxid)
+        remark_name = core.get_remark_or_nick_name(wxid)
         if remark_name:
             print("接收到消息", wxid, remark_name, msg)
         else:
@@ -155,7 +155,7 @@ class DealMessage:
                 time.sleep(waiting_time)
 
             # 发送消息
-            wechatf.send_message(wxid, repeat_msg)
+            core.send_message(wxid, repeat_msg)
 
             # 设置时间
             print("发送消息：", wxid, repeat_msg)
@@ -194,7 +194,7 @@ def handle_message():
     """
     while True:
         # 取消息
-        data = wechatf.get_message()
+        data = core.get_message()
         if data:
             # 微信好友发来的消息
             deal_message.deal_message(data)
@@ -202,11 +202,11 @@ def handle_message():
 
 def main():
     # 判断是否登录
-    if not wechatf.is_login():
+    if not core.is_login():
         print("未登录,正在获取登录二维码")
 
         # 获取二维码
-        png_bytes = bytes.fromhex(wechatf.get_login_qrcode())
+        png_bytes = bytes.fromhex(core.get_login_qrcode())
 
         # png路径
         png_path = os.path.join(tempfile.gettempdir(), "t.png")
@@ -219,7 +219,7 @@ def main():
 
     # 直到登录再继续
     while True:
-        if not wechatf.is_login():
+        if not core.is_login():
             time.sleep(3)
             print("等待扫描登录...")
         else:
@@ -227,7 +227,3 @@ def main():
 
     print('微信已登录,等待消息...')
     handle_message()
-
-
-if __name__ == '__main__':
-    main()

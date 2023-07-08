@@ -16,9 +16,9 @@ git clone https://github.com/luoyeah/wechat-frida
 # 切换到代码目录
 cd wechat-frida
 
-# 安装依赖
-pip install -r requirements.txt
+# 安装
+python setup.py install
 
-# 启动服务，默认开发本地8000端口
-python wechatf_http_server_start.py
+# 启动服务，默认本地8001端口
+wechatf-http-server
 ```
