@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='wechatf',
-    version="0.0.1",
+    version="0.0.2",
     description='wechatf 微信机器人框架（自动聊天、http协议访问）。',
     long_description='wechatf 使用frida框架hook微信PC端的python聊天机器人框架。（支持http调用、chatgpt聊天、自动回复好友消息等)。',
     author='luoyeah',

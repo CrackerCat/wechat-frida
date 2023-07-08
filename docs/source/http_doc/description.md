@@ -8,16 +8,9 @@
 ### 快速开始
 1. 下载并安装```v3_2_1_154```版本的微信。 （自行搜索下载，或点击这里：[WeChatSetup-3.2.1.154.exe](https://www.dngswin10.com/pcrj/15.html)下载，请注意核对数字签名是否正常）
 2. 安装python3.8及以上版本,下载地址:[https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
-3. 拉取代码安装、运行。
+3. 安装、运行。
 ```bash
-# 代码克隆到本地
-git clone https://github.com/luoyeah/wechat-frida
-
-# 切换到代码目录
-cd wechat-frida
-
-# 安装
-python setup.py install
+pip install wechatf
 
 # 启动服务，默认本地8001端口
 wechatf-http
