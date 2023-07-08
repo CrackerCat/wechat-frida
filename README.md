@@ -1,4 +1,4 @@
-# [wechat-frida](https://github.com/luoyeah/wechat-frida) 微信电脑版机器人框架
+# [wechat-frida](https://github.com/luoyeah/wechat-frida)
 
 ## 1、介绍
 
