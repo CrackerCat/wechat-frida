@@ -21,7 +21,7 @@
    （自行搜索下载，或点击这里：[WeChatSetup-3.2.1.154.exe](https://www.dngswin10.com/pcrj/15.html)下载，请注意核对数字签名是否正常）
 2. 安装python3.8及以上版本,下载地址:[https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
-3. 安装。
+3. 安装`wechatf`。
 
 ```bash
 pip install wechatf
