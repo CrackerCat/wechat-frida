@@ -19,8 +19,7 @@
 
 1. 下载并安装```v3_2_1_154```版本的微信。
    （自行搜索下载，或点击这里：[WeChatSetup-3.2.1.154.exe](https://www.dngswin10.com/pcrj/15.html)下载，请注意核对数字签名是否正常）
-2.
-安装python3.8及以上版本,下载地址:[https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
+2. 安装python3.8及以上版本,下载地址:[https://www.python.org/downloads/windows/](https://www.python.org/downloads/windows/)
 
 3. 拉取代码并安装依赖。
 
@@ -92,7 +91,7 @@ python wechatf_auto_repeat.py
 
 ###  3.4、python脚本中使用方法
 
-* 在项目根目录新建demo.py
+在项目根目录新建demo.py
 
 ```python
 # 导入包
