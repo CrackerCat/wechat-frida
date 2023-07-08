@@ -94,7 +94,7 @@ function build_send_message(wxid, msg) {
 
 // send_message("filehelper", "你好呀");
 
-rpc.exports.sendmessage = function (wxid, msg) {
+rpc.exports.call = function (wxid, msg) {
     try{
         build_send_message(wxid, msg)
     }catch(error){

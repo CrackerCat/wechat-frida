@@ -42,7 +42,7 @@ function build_call() {
 
 }
 
-rpc.exports.gotologinqrcode = function () {
+rpc.exports.call = function () {
     try{
         build_call()
     }catch(error){

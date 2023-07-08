@@ -10,7 +10,7 @@ let hook_info = {
 }
 
 
-rpc.exports.logout = function () {
+rpc.exports.call = function () {
     try{
         let ModAddress = Module.findBaseAddress(hook_info.moduleName);
 

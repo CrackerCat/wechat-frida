@@ -56,7 +56,7 @@ function get_info(){
     return result
 }
 
-rpc.exports.getloginuserinfo = function () {
+rpc.exports.call = function () {
     try{
         return get_info()
     }catch(error){

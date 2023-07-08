@@ -20,5 +20,5 @@ cd wechat-frida
 pip install -r requirements.txt
 
 # 启动服务，默认开发本地8000端口
-python wechatf_fastapi.py
+python wechatf_http_server_start.py
 ```

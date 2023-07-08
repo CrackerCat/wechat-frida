@@ -6,7 +6,6 @@ import time
 import random
 import functools
 
-import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from typing import Optional
@@ -115,11 +114,3 @@ def send_message(wxtextmessage: WXTextMessage):
     time.sleep(random.randint(2, 6))
     wechatf.send_message(wxtextmessage.wxid, wxtextmessage.message)
     return {"msg": "", "code": 0}
-
-
-if __name__ == '__main__':
-    uvicorn.run('wechatf_fastapi:app',
-                host='127.0.0.1', port=8001,
-                reload=True, workers=1)
-
-# uvicorn wechatf_fastapi_demo:app --reload

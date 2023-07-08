@@ -1,5 +1,5 @@
 """
-与微信建立连接、断开连接、加载js脚本
+版本判断、建立frida连接、断开连接、加载js脚本
 """
 import os
 import time
@@ -8,6 +8,9 @@ import subprocess
 
 import frida
 import win32api
+import pefile
+
+from . import conf
 
 
 class FridaSession:
@@ -20,6 +23,17 @@ class FridaSession:
 
         # 获取微信版本号
         self.wechatwin_dll_version = self._get_wechatwin_dll_version()
+        # 微信架构
+        self.wechatwin_dll_arch = self._get_wechatwin_dll_arch()
+
+        # 当前微信版本签名
+        self.current_version = f"v{self.wechatwin_dll_version.replace('.', '_')}_{self.wechatwin_dll_arch}"
+
+        # 判断是否支持当前版本
+        if self.current_version not in conf.support_version:
+            raise Exception(f"不支持当前版本：{self.current_version}")
+
+        print(f"当前微信版本：{self.current_version}")
 
         # 连接到微信
         self.session = self._get_session()
@@ -43,14 +57,14 @@ class FridaSession:
 
         return install_dir
 
-    def _get_wechatwin_dll_version(self):
+    def _get_wechatwin_dll_path(self):
         """
-        获取微信版本号
+        获取WeChatWin.dll 文件路径
+        :return:
         """
         # 获取安装目录
         install_dir = self._get_wechat_inst_dir()
         # print(install_dir)
-
         dll_path = None
         # 寻找wechatwind.ll文件
         for root, dirs, files in os.walk(install_dir, topdown=False):
@@ -58,16 +72,48 @@ class FridaSession:
                 # 判断是否相同
                 if _file.lower() == self.wechatwin_dll_name.lower():
                     dll_path = os.path.join(install_dir, root, _file)
+        return dll_path
+
+    def _get_wechatwin_dll_version(self):
+        """
+        获取微信版本号
+        """
+        dll_path = self._get_wechatwin_dll_path()
 
         # 获取dll文件版本号
         if os.path.isfile(dll_path):
             version_info = win32api.GetFileVersionInfo(dll_path, "\\")
             fixed_info = version_info['FileVersionMS'], version_info['FileVersionLS']
             version = f"{fixed_info[0] >> 16}.{fixed_info[0] & 0xffff}.{fixed_info[1] >> 16}.{fixed_info[1] & 0xffff}"
-            print(f"WeChatWin.dll 版本号：{version}")
+            # print(f"WeChatWin.dll 版本号：{version}")
             return version
         else:
             raise Exception("未找到 wechatwin.dll 文件。")
+
+    def _get_wechatwin_dll_arch(self):
+        """
+        获取wechatwin.dll架构
+        :return:
+        """
+        dll_path = self._get_wechatwin_dll_path()
+
+        # 获取dll架构
+        try:
+            pe = pefile.PE(dll_path, fast_load=True)
+
+            # 获取 PE 文件的机器架构信息
+            machine = pe.FILE_HEADER.Machine
+
+            # 根据机器架构信息判断支持的 CPU 架构
+            if machine == 0x14C:
+                return 'x86'
+            elif machine == 0x8664:
+                return 'x64'
+            else:
+                return 'Unknown'
+        except Exception as e:
+            print(f"Error occurred while opening and analyzing PE file: {e}")
+            return 'Unknown'
 
     def _get_session(self):
         """
@@ -100,8 +146,15 @@ class FridaSession:
 
         # 附加到进程
         _session = device.attach(pid)
-        print(f'Attached to WeChat process with PID {pid}')
+        print(f'已附加到WeChat.exe 进程PID: {pid}')
         return _session
+
+    def get_current_version(self):
+        """
+        获取当前微信版本签名
+        :return:
+        """
+        return self.current_version
 
     def load_script(self, js_name, on_message=None):
         """
@@ -113,11 +166,8 @@ class FridaSession:
         # 获取当前脚本文件夹
         current_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # 根据版本号转换到目录
-        version_dir = "v" + self.wechatwin_dll_version.replace(".", "_")
-
         # 获取脚本文件路径
-        js_path = os.path.join(current_dir, "js", version_dir, js_name + ".js")
+        js_path = os.path.join(current_dir, "js", self.current_version, js_name + ".js")
 
         # 判断文件是否存在
         if not os.path.isfile(js_path):

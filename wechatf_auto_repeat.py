@@ -1,5 +1,5 @@
 """
-wechatf 例子
+wechatf 自动回复微信例子
 自动回复
 """
 import os
@@ -15,9 +15,6 @@ import wechatf
 # 处理消息
 class DealMessage:
     def __init__(self):
-        # 上次回复消息时间
-        self._last_repeat_time = time.time()
-
         # 自动回复开关
         self._auto_repeat_flag = False
 
@@ -153,7 +150,7 @@ class DealMessage:
         # 判断是否有消息
         if repeat_msg:
             # 计算等待时间最少等待3-5秒
-            waiting_time = int(random.randint(3, 5))  # - (time.time() - self._last_repeat_time))
+            waiting_time = int(random.randint(3, 5))
             if waiting_time > 0:
                 time.sleep(waiting_time)
 
@@ -161,7 +158,6 @@ class DealMessage:
             wechatf.send_message(wxid, repeat_msg)
 
             # 设置时间
-            self._last_repeat_time = time.time()
             print("发送消息：", wxid, repeat_msg)
 
     def _gpt(self, msg):
@@ -219,7 +215,7 @@ def main():
         open(png_path, 'wb').write(png_bytes)
 
         # 打开二维码
-        os.startfile(png_path)
+        # os.startfile(png_path)
 
     # 直到登录再继续
     while True:
@@ -235,5 +231,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # 阻塞进程
-    input()

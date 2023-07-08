@@ -1,10 +1,12 @@
 """
-处理frida脚本交互：消息接收、js脚本执行
+处理frida脚本交互：send消息接收、js脚本调用执行
 """
 import queue
 
 from .frida_session import FridaSession
 from . import _debug_print
+
+from . import conf
 
 
 class FridaJS:
@@ -18,14 +20,10 @@ class FridaJS:
         # 消息回调函数
         self._api_on_message = self._gen_on_message_callback()
 
-        # 回调js
-        recv_js = [
-            "recv_login_qrcode",
-            "recv_friend_list",
-            "recv_message",
-        ]
+        # 注册回调js
+        recv_js = conf.support_version.get(self._frida_session.get_current_version()).get("frida_recv_js")
 
-        # 加载所有回调js
+        # 为每个回调函数设置消息队列
         for js in recv_js:
             # 为每个js建立消息队列
             self._api_message[js] = queue.Queue()
@@ -88,7 +86,8 @@ class FridaJS:
 
         def sync_call(*args, **kwargs):
             # 根据名称获取方法
-            _func = getattr(script.exports_sync, func_name.replace("_", ""))
+            # _func = getattr(script.exports_sync, func_name.replace("_", ""))
+            _func = getattr(script.exports_sync, "call")
 
             # 调用方法
             result = _func(*args, **kwargs)
