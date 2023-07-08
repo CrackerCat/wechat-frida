@@ -1,19 +1,17 @@
-# [wechat-frida](https://github.com/luoyeah/wechat-frida) PC微信聊天机器人框架 （支持GPT聊天、自动回复好友消息、Http协议访问)
+# [wechat-frida](https://github.com/luoyeah/wechat-frida) 微信电脑版机器人框架
 
 ## 1、介绍
 
-* wechat-frida 是一款使用frida框架hook微信PC端的聊天机器人框架。该框架使用frida js脚本动态hook程序，便于调试和快速适配最新客户端。
+* wechat-frida 是一款使用frida框架hook微信PC端的python聊天机器人框架。（支持http调用、chatgpt聊天、自动回复好友消息等)。
+* 涉及技术：二进制逆向分析、frida动态hook、python、fastapi。
 * 仓库地址：[https://github.com/luoyeah/wechat-frida](https://github.com/luoyeah/wechat-frida)
-* 涉及技术：二进制逆向分析、frida动态hook、python、fastapi
-* API文档：[https://wechat-frida.readthedocs.io/zh_CN/latest/](https://wechat-frida.readthedocs.io/zh_CN/latest/)
+* 开发文档：[https://wechat-frida.readthedocs.io/zh_CN/latest/](https://wechat-frida.readthedocs.io/zh_CN/latest/)
 
 ## 2、特性
 
-1. 使用frida框架hook微信PC客户端，便于调试js代码和快速适配最新客户端。
-2. 根据系统已安装微信版本自动加载与其对应的frida js脚本。
-3. 可自行在```wechatf/js/```文件夹下添加最新版本适配脚本。
-4. 提供http协议访问接口。
-5. 可设置自动回复好友消息内容、开启和关闭自动回复、ChatGPT聊天功能。
+1. 使用frida框架js脚本hook微信电脑版客户端，方便适配最新版本客户端（frida-js目录：```wechatf/js/```）。
+2. 提供http协议接口（[接口文档](https://wechat-frida.readthedocs.io/zh_CN/latest/)）。
+3. 可设置自动回复好友消息内容、开启和关闭自动回复、ChatGPT聊天功能。
 
 ## 3、快速开始
 
@@ -58,7 +56,7 @@ python wechatf_http_server_start.py
 ，跳转到链接后，再点击```免费获取```链接，使用github账号授权获取key。
 
 2. 在项目根目录新建```openai.key```文件，将key保存此文件。
-3. 运行auto_repeat.py。
+3. 运行 wechatf_auto_repeat.py。
 
 ```bash
 # 切换到代码目录
@@ -90,7 +88,9 @@ python wechatf_auto_repeat.py
 取消ai聊天。
  ```
 
-## 4、python脚本中使用方法
+5. 用手机微信向文件传输助手发送消息可实现向GPT聊天。
+
+###  3.4、python脚本中使用方法
 
 * 在项目根目录新建demo.py
 
@@ -112,7 +112,7 @@ contacts = wechatf.get_contacts()
 print(contacts)
 ```
 
-## 5、支持版本和功能
+## 4、支持版本和功能
 
 #### ✅v3_2_1_154_x86
 
@@ -134,7 +134,7 @@ print(contacts)
 * ✅ 接收文本消息
 * ✅ 发送文本消息
 
-## 6、参与贡献
+## 5、参与贡献
 
 1. Fork 本仓库
 2. 新建 dev 分支
